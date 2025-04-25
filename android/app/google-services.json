@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1684408708",
+    "project_id": "jaylloydkaizane",
+    "storage_bucket": "jaylloydkaizane.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1684408708:android:e336200f2b3ee0090b75d1",
+        "android_client_info": {
+          "package_name": "com.example.fire_base"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAKAVWVojU6m97BuK3ODAMz0aR7HV8yM_s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
