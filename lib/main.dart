@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
         stream: FirebaseAuth.instance.authStateChanges(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return GetMaterialApp(
+            return const GetMaterialApp(
               debugShowCheckedModeBanner: false,
               home: Scaffold(
                 body: Center(

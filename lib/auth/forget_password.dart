@@ -1,6 +1,7 @@
 import 'package:another_flushbar/flushbar.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fire_base/auth/repo/auth_repo.dart';
+import 'package:fire_base/common_functions/show_flushbar.dart';
 
 class ForgetPassword extends StatefulWidget {
   const ForgetPassword({super.key});
@@ -19,19 +20,9 @@ class _ForgetPasswordState extends State<ForgetPassword> {
       loading = true;
     });
     try {
-      await FirebaseAuth.instance
-          .sendPasswordResetEmail(email: emailController.text);
+      await AuthRepo.sendPasswordResetEmail(emailController.text);
 
-      Flushbar(
-        message: "Check your mail",
-        icon: Icon(
-          Icons.check_circle,
-          size: 28.0,
-          color: Colors.green,
-        ),
-        duration: Duration(seconds: 3),
-        leftBarIndicatorColor: Colors.green,
-      ).show(context);
+      showSuccess("Check your mail", context);
 
       setState(() {
         loading = false;
@@ -41,16 +32,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
         loading = false;
       });
 
-      Flushbar(
-        message: error.toString(),
-        icon: Icon(
-          Icons.error,
-          size: 28.0,
-          color: Colors.red,
-        ),
-        duration: Duration(seconds: 3),
-        leftBarIndicatorColor: Colors.red,
-      ).show(context);
+      showError(error.toString(), context);
     }
   }
 

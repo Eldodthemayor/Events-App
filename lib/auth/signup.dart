@@ -1,8 +1,8 @@
-import 'package:another_flushbar/flushbar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fire_base/auth/login.dart';
+import 'package:fire_base/auth/repo/auth_repo.dart';
+import 'package:fire_base/common_functions/show_flushbar.dart';
 import 'package:get/get.dart';
 
 class Signup extends StatefulWidget {
@@ -11,6 +11,10 @@ class Signup extends StatefulWidget {
   @override
   State<Signup> createState() => _SignupState();
 }
+
+// OOP - Object Oriented Programming
+
+// class - object
 
 class _SignupState extends State<Signup> {
   TextEditingController nameController = TextEditingController();
@@ -26,32 +30,23 @@ class _SignupState extends State<Signup> {
       loading = true;
     });
     try {
-      await FirebaseAuth.instance.createUserWithEmailAndPassword(
-        email: emailController.text,
-        password: passwordController.text,
+      await AuthRepo.signUpWithEmailAndPassword(
+        emailController.text,
+        passwordController.text,
       );
-      await FirebaseAuth.instance.currentUser!.sendEmailVerification();
+      await AuthRepo.sendEmailVerification();
 
       await FirebaseFirestore.instance
           .collection('users')
-          .doc(FirebaseAuth.instance.currentUser!.uid)
+          .doc(AuthRepo.getUid())
           .set({
         'name': nameController.text,
         'email': emailController.text,
         'password': passwordController.text,
-        'uid': FirebaseAuth.instance.currentUser!.uid,
+        'uid': AuthRepo.getUid(),
       });
 
-      Flushbar(
-        message: "Successfully Registered",
-        icon: Icon(
-          Icons.check_circle,
-          size: 28.0,
-          color: Colors.green,
-        ),
-        duration: Duration(seconds: 3),
-        leftBarIndicatorColor: Colors.green,
-      ).show(context);
+      showSuccess("Successfully Registered", context);
 
       setState(() {
         loading = false;
@@ -60,17 +55,7 @@ class _SignupState extends State<Signup> {
       setState(() {
         loading = false;
       });
-
-      Flushbar(
-        message: error.toString(),
-        icon: Icon(
-          Icons.error,
-          size: 28.0,
-          color: Colors.red,
-        ),
-        duration: Duration(seconds: 3),
-        leftBarIndicatorColor: Colors.red,
-      ).show(context);
+      showError(error.toString(), context);
     }
   }
 
@@ -87,13 +72,13 @@ class _SignupState extends State<Signup> {
               children: [
                 ClipRRect(
                   borderRadius: BorderRadius.circular(15),
-                  child: Image(
+                  child: const Image(
                     height: 150,
                     width: 150,
                     image: AssetImage("assets/design.gif"),
                   ),
                 ),
-                Text(
+                const Text(
                   "Sign Up",
                   style: TextStyle(
                     fontSize: 25,
@@ -101,7 +86,7 @@ class _SignupState extends State<Signup> {
                 ),
                 TextFormField(
                   controller: nameController,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     enabledBorder: OutlineInputBorder(),
                     focusedBorder: OutlineInputBorder(),
                     hintText: 'Username',
@@ -111,7 +96,7 @@ class _SignupState extends State<Signup> {
                 TextFormField(
                   keyboardType: TextInputType.emailAddress,
                   controller: emailController,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     enabledBorder: OutlineInputBorder(),
                     focusedBorder: OutlineInputBorder(),
                     hintText: 'Email Address',
@@ -123,10 +108,10 @@ class _SignupState extends State<Signup> {
                   keyboardType: TextInputType.visiblePassword,
                   controller: passwordController,
                   decoration: InputDecoration(
-                    enabledBorder: OutlineInputBorder(),
-                    focusedBorder: OutlineInputBorder(),
+                    enabledBorder: const OutlineInputBorder(),
+                    focusedBorder: const OutlineInputBorder(),
                     hintText: 'Password',
-                    prefixIcon: Icon(Icons.password),
+                    prefixIcon: const Icon(Icons.password),
                     suffixIcon: IconButton(
                       onPressed: () {
                         setState(() {
@@ -134,8 +119,8 @@ class _SignupState extends State<Signup> {
                         });
                       },
                       icon: password == true
-                          ? Icon(Icons.visibility_off)
-                          : Icon(Icons.visibility),
+                          ? const Icon(Icons.visibility_off)
+                          : const Icon(Icons.visibility),
                     ),
                   ),
                 ),
@@ -144,10 +129,10 @@ class _SignupState extends State<Signup> {
                   child: TextButton(
                     onPressed: () {
                       Get.to(
-                        Login(),
+                        const Login(),
                       );
                     },
-                    child: Text("Already have an account: LogIn"),
+                    child: const Text("Already have an account: LogIn"),
                   ),
                 ),
                 ElevatedButton(
@@ -160,14 +145,14 @@ class _SignupState extends State<Signup> {
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(15),
                     ),
-                    minimumSize: Size(double.infinity, 50),
+                    minimumSize: const Size(double.infinity, 50),
                   ),
                   // if condition - if else - inline if
                   child: loading == true
-                      ? CircularProgressIndicator(
+                      ? const CircularProgressIndicator(
                           color: Colors.white,
                         )
-                      : Text("Sign up"),
+                      : const Text("Sign up"),
                 ),
               ],
             ),

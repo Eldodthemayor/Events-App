@@ -65,4 +65,5 @@ class DefaultFirebaseOptions {
     storageBucket: 'jaylloydkaizane.firebasestorage.app',
     iosBundleId: 'com.example.fireBase',
   );
+
 }

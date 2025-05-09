@@ -1,8 +1,9 @@
 import 'package:another_flushbar/flushbar.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fire_base/auth/forget_password.dart';
+import 'package:fire_base/auth/repo/auth_repo.dart';
 import 'package:fire_base/auth/signup.dart';
+import 'package:fire_base/common_functions/show_flushbar.dart';
 import 'package:fire_base/home/bottom_navigation_bar.dart';
 import 'package:get/get.dart';
 
@@ -26,15 +27,15 @@ class _LoginState extends State<Login> {
       loading = true;
     });
     try {
-      await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: emailController.text,
-        password: passwordController.text,
+      await AuthRepo.signInWithEmailAndPassword(
+        emailController.text,
+        passwordController.text,
       );
-      await FirebaseAuth.instance.currentUser!.reload();
+      await AuthRepo.reloadData();
 
-      if (FirebaseAuth.instance.currentUser!.emailVerified) {
+      if (AuthRepo.auth.currentUser!.emailVerified) {
         Get.offAll(
-          BottomNavigationBarScreen(),
+          const BottomNavigationBarScreen(),
         );
       }
 
@@ -46,16 +47,7 @@ class _LoginState extends State<Login> {
         loading = false;
       });
 
-      Flushbar(
-        message: error.toString(),
-        icon: Icon(
-          Icons.error,
-          size: 28.0,
-          color: Colors.red,
-        ),
-        duration: Duration(seconds: 3),
-        leftBarIndicatorColor: Colors.red,
-      ).show(context);
+      showError(error.toString(), context);
     }
   }
 
@@ -72,13 +64,13 @@ class _LoginState extends State<Login> {
               children: [
                 ClipRRect(
                   borderRadius: BorderRadius.circular(15),
-                  child: Image(
+                  child: const Image(
                     height: 150,
                     width: 150,
                     image: AssetImage("assets/design.gif"),
                   ),
                 ),
-                Text(
+                const Text(
                   "Login",
                   style: TextStyle(
                     fontSize: 25,
@@ -87,7 +79,7 @@ class _LoginState extends State<Login> {
                 TextFormField(
                   keyboardType: TextInputType.emailAddress,
                   controller: emailController,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     enabledBorder: OutlineInputBorder(),
                     focusedBorder: OutlineInputBorder(),
                     hintText: 'Email Address',
@@ -99,10 +91,10 @@ class _LoginState extends State<Login> {
                   keyboardType: TextInputType.visiblePassword,
                   controller: passwordController,
                   decoration: InputDecoration(
-                    enabledBorder: OutlineInputBorder(),
-                    focusedBorder: OutlineInputBorder(),
+                    enabledBorder: const OutlineInputBorder(),
+                    focusedBorder: const OutlineInputBorder(),
                     hintText: 'Password',
-                    prefixIcon: Icon(Icons.password),
+                    prefixIcon: const Icon(Icons.password),
                     suffixIcon: IconButton(
                       onPressed: () {
                         setState(() {
@@ -110,8 +102,8 @@ class _LoginState extends State<Login> {
                         });
                       },
                       icon: password == true
-                          ? Icon(Icons.visibility_off)
-                          : Icon(Icons.visibility),
+                          ? const Icon(Icons.visibility_off)
+                          : const Icon(Icons.visibility),
                     ),
                   ),
                 ),
@@ -121,18 +113,18 @@ class _LoginState extends State<Login> {
                     TextButton(
                       onPressed: () {
                         Get.to(
-                          ForgetPassword(),
+                          const ForgetPassword(),
                         );
                       },
-                      child: Text("Forget Password"),
+                      child: const Text("Forget Password"),
                     ),
                     TextButton(
                       onPressed: () {
                         Get.to(
-                          Signup(),
+                          const Signup(),
                         );
                       },
-                      child: Text("Don't have an account ? Sign Up"),
+                      child: const Text("Don't have an account ? Sign Up"),
                     ),
                   ],
                 ),
@@ -146,14 +138,14 @@ class _LoginState extends State<Login> {
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(15),
                     ),
-                    minimumSize: Size(double.infinity, 50),
+                    minimumSize: const Size(double.infinity, 50),
                   ),
                   // if condition - if else - inline if
                   child: loading == true
-                      ? CircularProgressIndicator(
+                      ? const CircularProgressIndicator(
                           color: Colors.white,
                         )
-                      : Text("Login"),
+                      : const Text("Login"),
                 ),
               ],
             ),

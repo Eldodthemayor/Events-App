@@ -36,12 +36,12 @@ class _UpdatePasswordState extends State<UpdatePassword> {
           });
           Flushbar(
             message: 'Password Updated Successfully',
-            icon: Icon(
+            icon: const Icon(
               Icons.check_circle,
               size: 28.0,
               color: Colors.green,
             ),
-            duration: Duration(seconds: 3),
+            duration: const Duration(seconds: 3),
             leftBarIndicatorColor: Colors.green,
           ).show(context);
         });
@@ -51,12 +51,12 @@ class _UpdatePasswordState extends State<UpdatePassword> {
         });
         Flushbar(
           message: 'old password is incorrect',
-          icon: Icon(
+          icon: const Icon(
             Icons.error,
             size: 28.0,
             color: Colors.red,
           ),
-          duration: Duration(seconds: 3),
+          duration: const Duration(seconds: 3),
           leftBarIndicatorColor: Colors.red,
         ).show(context);
       }
@@ -66,12 +66,12 @@ class _UpdatePasswordState extends State<UpdatePassword> {
       });
       Flushbar(
         message: e.toString(),
-        icon: Icon(
+        icon: const Icon(
           Icons.error,
           size: 28.0,
           color: Colors.red,
         ),
-        duration: Duration(seconds: 3),
+        duration: const Duration(seconds: 3),
         leftBarIndicatorColor: Colors.red,
       ).show(context);
     }
@@ -96,7 +96,7 @@ class _UpdatePasswordState extends State<UpdatePassword> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Update Password"),
+        title: const Text("Update Password"),
       ),
       body: Padding(
         padding: const EdgeInsets.all(20),
@@ -104,7 +104,7 @@ class _UpdatePasswordState extends State<UpdatePassword> {
           spacing: 20,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Text(
+            const Text(
               "To Change Password Please fill in the form below and click save password",
               style: TextStyle(
                 fontSize: 18,
@@ -160,11 +160,11 @@ class _UpdatePasswordState extends State<UpdatePassword> {
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(15),
                 ),
-                minimumSize: Size(double.infinity, 50),
+                minimumSize: const Size(double.infinity, 50),
               ),
               child: loading == true
-                  ? CircularProgressIndicator()
-                  : Text("Save Password"),
+                  ? const CircularProgressIndicator()
+                  : const Text("Save Password"),
             ),
           ],
         ),
